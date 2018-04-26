@@ -26,6 +26,9 @@
 /// @name Initialization
 /// @{
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 /** @brief Initializes a newly allocated CPTXYAxisSet object with the provided frame rectangle.
  *
  *  This is the designated initializer. The @ref axes array
@@ -40,6 +43,9 @@
  *  @param newFrame The frame rectangle.
  *  @return The initialized CPTXYAxisSet object.
  **/
+
+#pragma clang diagnostic pop
+
 -(nonnull instancetype)initWithFrame:(CGRect)newFrame
 {
     if ((self = [super initWithFrame:newFrame])) {
