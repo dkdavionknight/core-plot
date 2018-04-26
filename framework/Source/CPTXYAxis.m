@@ -13,6 +13,8 @@
 #import "NSCoderExtensions.h"
 #import <tgmath.h>
 
+#import "CPTXYAxisSet.h"
+
 /// @cond
 @interface CPTXYAxis()
 
@@ -306,7 +308,12 @@
         return;
     }
 
-    [super renderAsVectorInContext:context];
+    if (self.opaque) {
+        CGContextSaveGState(context);
+        CGContextSetFillColorWithColor(context, self.backgroundColor);
+        CGContextFillRect(context, self.bounds);
+        CGContextRestoreGState(context);
+    }
 
     [self relabel];
 
@@ -361,6 +368,23 @@
             [theLineStyle strokePathInContext:context];
         }
 
+        if (self.coordinate == CPTCoordinateY) {
+            if ( theLineStyle ) {
+                CPTPlotRange *thePlotXRange    = [self.plotSpace plotRangeForCoordinate:CPTCoordinateX];
+                CPTMutablePlotRange *xRange    = [thePlotXRange mutableCopy];
+                
+                CPTXYAxisSet *xyAxisSet = (CPTXYAxisSet *)self.axisSet;
+                CPTXYAxis *xAxis = xyAxisSet.xAxis;
+                CGPoint startViewPoint = CPTAlignPointToUserSpace(context, [xAxis viewPointForCoordinateValue:xRange.location]);
+                CGPoint endViewPoint   = CPTAlignPointToUserSpace(context, [xAxis viewPointForCoordinateValue:xRange.end]);
+                [theLineStyle setLineStyleInContext:context];
+                CGContextBeginPath(context);
+                CGContextMoveToPoint(context, startViewPoint.x, startViewPoint.y);
+                CGContextAddLineToPoint(context, endViewPoint.x, endViewPoint.y);
+                [theLineStyle strokePathInContext:context];
+            }
+        }
+        
         CGPoint axisDirection = CGPointZero;
         if ( minCap || maxCap ) {
             switch ( self.coordinate ) {

@@ -382,6 +382,11 @@ const CGFloat kCPTTextLayerMarginWidth = CPTFloat(2.0);
         CGContextSaveGState(context);
         CGContextTranslateCTM(context, CPTFloat(0.0), self.bounds.size.height);
         CGContextScaleCTM(context, CPTFloat(1.0), CPTFloat(-1.0));
+        
+        if (self.opaque) {
+            CGContextSetFillColorWithColor(context, self.backgroundColor);
+            CGContextFillRect(context, self.bounds);
+        }
 #endif
 
         CGRect newBounds = CGRectInset(self.bounds, kCPTTextLayerMarginWidth, kCPTTextLayerMarginWidth);

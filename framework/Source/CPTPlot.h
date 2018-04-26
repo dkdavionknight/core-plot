@@ -2,6 +2,8 @@
 #import "CPTDefinitions.h"
 #import "CPTNumericDataType.h"
 
+#import "CPTLineStyle.h"
+
 /// @file
 
 @class CPTLegend;
@@ -313,6 +315,9 @@ typedef NSMutableArray<__kindof CPTPlot *> CPTMutablePlotArray;
 /// @{
 @property (nonatomic, readwrite, assign) BOOL drawLegendSwatchDecoration;
 /// @}
+
+@property (nonatomic, readwrite, copy, nullable) CPTLineStyle *averageLineStyle;
+@property (nonatomic, readwrite, copy, nullable) NSDecimalNumber *averageValue;
 
 /// @name Data Labels
 /// @{

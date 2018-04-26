@@ -2302,4 +2302,28 @@ CPTPlotBinding const CPTPlotBindingDataLabels = @"dataLabels"; ///< Plot data la
     return NSNotFound;
 }
 
+-(void)renderAsVectorInContext:(CGContextRef)context {
+    if (self.opaque) {
+        CGContextSaveGState(context);
+        CGContextSetFillColorWithColor(context, self.backgroundColor);
+        CGContextFillRect(context, self.bounds);
+        CGContextRestoreGState(context);
+    }
+
+    [super renderAsVectorInContext:context];
+    
+    if ((self.averageValue != nil) && (self.averageLineStyle != nil)) {
+        NSDecimal plotPoint[2];
+        plotPoint[CPTCoordinateX] = [[NSDecimalNumber zero] decimalValue];
+        plotPoint[CPTCoordinateY] = self.averageValue.decimalValue;
+        CGPoint point = [self.plotSpace plotAreaViewPointForPlotPoint:plotPoint numberOfCoordinates:2];
+        CGFloat x = 0;
+        CGFloat y = point.y;
+        CGContextMoveToPoint(context, x, y);
+        CGContextAddLineToPoint(context, x + CGRectGetWidth(self.bounds), y);
+        [self.averageLineStyle setLineStyleInContext:context];
+        [self.averageLineStyle strokePathInContext:context];
+    }
+}
+
 @end

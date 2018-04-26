@@ -360,7 +360,7 @@ static const size_t kCPTNumberOfLayers = 6; // number of primary layers to arran
     CPTPlotGroup *thePlotGroup = self.plotGroup;
     if ( thePlotGroup ) {
         CGSize selfBoundsSize = self.bounds.size;
-        thePlotGroup.frame = CPTRectMake(0.0, 0.0, selfBoundsSize.width, selfBoundsSize.height);
+        thePlotGroup.frame = CPTRectMake(1.0, 1.0, selfBoundsSize.width - 1.0, selfBoundsSize.height - 1.0);
     }
 
     // the label and title groups never have anything to draw; make them as small as possible to save memory
