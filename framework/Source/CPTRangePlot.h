@@ -72,7 +72,7 @@ typedef NS_ENUM (NSInteger, CPTRangePlotFillDirection) {
 -(nullable CPTLineStyle *)barLineStyleForRangePlot:(nonnull CPTRangePlot *)plot recordIndex:(NSUInteger)idx;
 
 /** @brief @optional Gets an array of bar widths for the given range plot.
- *  @param plot The range plot.
+ *  @param barPlot The range plot.
  *  @param indexRange The range of the data indexes of interest.
  *  @return An array of bar widths.
  **/
